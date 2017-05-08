@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+  <!--
+    *********************************************************************************
+    * 
+    * File: display.php   | For retrieving and displaying data from the DB.
+    * 
+    * 
+    * Created by Jason Lengstorf for Ennui Design. Copyright (C) 2008 Ennui Design.
+    * 
+    *        www.EnnuiDesign.com | answers@ennuidesign.com | (406) 270-4435
+    
+    * 
+    * This file was created to accompany an article written for CSS-Tricks.com
+    * 
+    *********************************************************************************
+  -->
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>Simple CMS with PHP</title>
+    
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body>
+  	<div id="page-wrap">
+    <?php
+    
+      include('_class/simpleCMS.php');
+      $obj = new simpleCMS();
+
+	  /* CHANGE THESE SETTINGS FOR YOUR OWN DATABASE */
+      $obj->host = 'localhost';
+      $obj->username = 'root';
+      $obj->password = '111';
+      $obj->table = 'mysql';
+      $obj->connect();
+
+      if (isset($_POST["title"]) ) {
+      	$obj->write($_POST);
+      }
+
+      if(isset($_GET['admin'])) {
+        if ($_GET["admin"]==1) {
+          echo $obj->display_admin();
+        } 
+      } else {
+          echo $obj->display_public();
+      }
+
+      // echo $obj -> display_admin();  
+      // echo $obj -> display_public();
+    
+    ?>
+	</div>
+  </body>
+
+</html>
